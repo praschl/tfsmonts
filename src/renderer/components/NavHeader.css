@@ -1,0 +1,35 @@
+.navHeader {
+    background-color: #888;
+    color: whitesmoke;
+    font-weight: bold;
+    position: sticky;
+    top:0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.navHeader label {
+    margin: 5pt;
+}
+
+.navHeader span {
+    display: flex;
+    align-items: center;
+}
+
+.navHeader svg {
+    margin: 5pt;
+}
+
+.navHeader input {
+    text-align: left;
+    height: 1.5rem;
+    font-size: 1.2rem;
+    border: none;
+    margin: 5pt;
+    padding: 10pt 5pt;
+}

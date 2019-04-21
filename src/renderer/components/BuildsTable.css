@@ -1,0 +1,67 @@
+.BuildsTable {
+    width: 100%;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+.BuildsTable thead th {
+    background-color: #999;
+    color: white;
+    text-align: left;
+    padding: 4pt 4pt;
+    white-space: nowrap;
+    vertical-align: middle;
+    position: sticky;
+    top: 0;
+}
+
+.BuildsTable th:hover {
+    background-color: #aaa;
+}
+
+.BuildsTable th div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.BuildsTable svg {
+    font-size: 1.3rem;
+    float: inline-end;
+}
+
+.BuildsTable td {
+    padding: 1pt 2pt;
+    border-bottom: 1pt solid #ddd;
+}
+
+.resultColumn {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.state-notStarted,
+.state-postponed,
+.state-inProgress,
+.state-cancelling {
+    color: dodgerblue;
+}
+
+.state-succeeded {
+    color: limegreen;
+}
+
+.state-failed {
+    color: crimson;
+}
+
+.state-partiallySucceeded,
+.state-canceled {
+    color: orange;
+}
+
+.unknown {
+    color: ​#be34be;
+}

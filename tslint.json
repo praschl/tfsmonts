@@ -1,0 +1,54 @@
+{
+  "defaultSeverity": "warn",
+  "extends": [
+    "tslint:recommended",
+    "tslint-microsoft-contrib"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-relative-imports": false,
+    "no-default-export": false,
+    "variable-name": false,
+    "function-name": false,
+    "typedef": false,
+    "no-suspicious-comment": false,
+    "strict-boolean-expressions": false,
+    "newline-before-return": false,
+    //     
+    "align": [true, "statements", "members", "elements"],
+    "export-name": [
+      true,
+      {
+        "ignore-case": true
+      }
+    ],
+    "max-line-length": [true, 120],
+    "linebreak-style": {
+        "options": "CRLF"
+    },
+    "no-any": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      [
+        "@",
+        "@public",
+        "@main",
+        "@models",
+        "@renderer",
+        "@utils"
+      ]
+    ],
+    "no-import-side-effect": [
+      true,
+      {
+        "ignore-module": "(\\.css)$"
+      }
+    ],
+    "no-increment-decrement": ["allow-for-loops"],
+    "rulesDirectory": [
+      "node_modules/tslint-microsoft-contrib"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+.error-message {
+  background-color: #FCC;
+  color: #D00;
+  font-weight: bold;
+  border: 1px solid #D00;
+  border-radius: 4px;
+  box-shadow: 1px 1px 8px 1px #800;
+  width: 50%;
+  margin: 5pt auto 10pt;
+  padding: 5pt;
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-message button {
+  background-color: transparent;
+  border: none;
+  color: #800;
+  margin: 0pt;
+  padding: 1pt 2pt 0;
+  font-size: 1.2rem;
+}
+
+.error-message button:hover {
+  background-color: #FDD;
+}

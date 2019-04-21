@@ -1,0 +1,11 @@
+.tableBorder {
+    margin: 5pt;
+    padding: 5pt;
+    border: 1pt solid #ddd;
+    border-radius: 5pt;
+}
+
+.tableContainer {
+    overflow: auto;
+    height: calc(100vh - 55pt);
+}

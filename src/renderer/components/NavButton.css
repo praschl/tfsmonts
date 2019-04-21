@@ -1,0 +1,16 @@
+.navButton {
+    color: white;
+    background-color: transparent;
+    border: none;
+    margin: none;
+    padding: none;
+    font-size: 1.5rem;
+}
+
+.navButton:hover {
+    background-color: #aaa;
+}
+
+.navButton:hover:disabled {
+  background-color: #888;
+}
