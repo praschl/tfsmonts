@@ -10,11 +10,13 @@ import * as types from './types';
 // dispatch only in async methods (.then)
 // not pass dispatch to other methods
 
-const fetchProjects = (tfsUrl: string, dispatch: React.Dispatch<IAction>) => {
+const fetchProjects = (tfsUrl: string, dispatch: React.Dispatch<IAction>, initial: boolean) => {
   project.fetchProjectsAsync(tfsUrl)
     .then(projects => {
       dispatch({ type: types.FETCH_PROJECTS_SUCCESS, projects: projects });
-      build.dispatchFetchBuilds(dispatch);
+      if (initial) {
+        build.dispatchFetchBuildsInitial(dispatch);
+      }
     })
     .catch(error => {
       dispatch({ type: types.SET_ERROR, error: error });

@@ -10,12 +10,23 @@ type reducerType = (context: IGlobalContext, action: IAction) => IGlobalContext;
 const reducer: reducerType =
   (context: IGlobalContext, action: IAction): IGlobalContext => {
     switch (action.type) {
+      case types.FETCH_PROJECTS_INITIAL: {
+        asyncActions.fetchProjects(context.config.tfsUrl, context.dispatch, true);
+        return context;
+      }
       case types.FETCH_PROJECTS: {
-        asyncActions.fetchProjects(context.config.tfsUrl, context.dispatch);
+        asyncActions.fetchProjects(context.config.tfsUrl, context.dispatch, false);
         return context;
       }
       case types.FETCH_PROJECTS_SUCCESS: return actions.fetchProjectsSuccess(context, action);
       //
+      case types.FETCH_BUILDS_INITIAL: {
+        asyncActions.fetchBuilds(null,
+          context.config.tfsUrl,
+          context.projects,
+          context.dispatch);
+        return context;
+      }
       case types.FETCH_BUILDS: {
         asyncActions.fetchBuilds(context.lastBuildsFetchDate,
           context.config.tfsUrl,
@@ -26,7 +37,7 @@ const reducer: reducerType =
       case types.FETCH_BUILDS_SUCCESS: return actions.fetchBuildsSuccess(context, action);
       //
       case types.SET_TFS_URL: {
-        asyncActions.fetchProjects(<string>action.tfsUrl, context.dispatch);
+        asyncActions.fetchProjects(<string>action.tfsUrl, context.dispatch, true);
         return actions.setTfsUrl(context, action);
       }
       //

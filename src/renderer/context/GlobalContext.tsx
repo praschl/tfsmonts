@@ -48,7 +48,7 @@ const useGlobalContextAutoUpdate = () => {
   const { context } = useGlobalContext();
 
   React.useEffect(() => {
-    project.dispatchFetchProjects(context.dispatch);
+    project.dispatchFetchProjectsInitial(context.dispatch);
   }, []);
 
   useInterval(() => {

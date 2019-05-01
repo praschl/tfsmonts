@@ -46,14 +46,10 @@ const fetchBuildsSuccess = (context: IGlobalContext, action: IAction): IGlobalCo
     }
   });
 
-  // HACK: if we didn't find any builds, next time try to get the whole list, not just the changes.
-  // this needs to be fixed, and has somehow todo with multiple requests going on
-  const nextDate = knownBuilds.length > 0 ? <Date>action.requestDate : null;
-
   return {
     ...context,
     builds: knownBuilds,
-    lastBuildsFetchDate: nextDate
+    lastBuildsFetchDate: <Date>action.requestDate
   };
 };
 

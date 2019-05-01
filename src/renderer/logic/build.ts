@@ -30,6 +30,10 @@ interface IBuildView {
   fulltextSearch: string;
 }
 
+const dispatchFetchBuildsInitial = (dispatch: React.Dispatch<IAction>) => {
+  dispatch({ type: types.FETCH_BUILDS_INITIAL });
+};
+
 const dispatchFetchBuilds = (dispatch: React.Dispatch<IAction>) => {
   dispatch({ type: types.FETCH_BUILDS });
 };
@@ -136,4 +140,4 @@ const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams) => {
   return allResults.map(mapBuild);
 };
 
-export { BuildStates, IBuildView, getBuildsParams, fetchBuildsAsync, dispatchFetchBuilds };
+export { BuildStates, IBuildView, getBuildsParams, fetchBuildsAsync, dispatchFetchBuilds, dispatchFetchBuildsInitial };

@@ -8,6 +8,10 @@ interface IProjectView {
   name: string;
 }
 
+const dispatchFetchProjectsInitial = (dispatch: React.Dispatch<IAction>) => {
+  dispatch({ type: types.FETCH_PROJECTS_INITIAL });
+};
+
 const dispatchFetchProjects = (dispatch: React.Dispatch<IAction>) => {
   dispatch({ type: types.FETCH_PROJECTS });
 };
@@ -31,4 +35,4 @@ const fetchProjectsAsync = async (url: string) => {
   return projects;
 };
 
-export { IProjectView, dispatchFetchProjects, fetchProjectsAsync };
+export { IProjectView, dispatchFetchProjects, dispatchFetchProjectsInitial, fetchProjectsAsync };
