@@ -32,6 +32,8 @@ import BuildHeader, { ISort } from './BuildHeader';
 import ErrorDisplay from './Error/ErrorDisplay';
 import Spinner from './Spinner/Spinner';
 
+import * as electron from 'electron';
+
 const iconByState: { [state in BuildStates]: IconDefinition } = {
   notStarted: faEllipsisH,
   postponed: faCalendarAlt,
@@ -48,6 +50,10 @@ const iconByState: { [state in BuildStates]: IconDefinition } = {
 
 const defaultSort: ISort = { column: 'projectName', order: 'asc' };
 
+const doubleClickHandler = (url: string) => {
+  electron.shell.openExternal(url);
+};
+
 const mapBuildsToRows = (builds: IBuildView[]) => {
   return builds.map(b => {
     let icon = iconByState[b.displayStatus];
@@ -58,7 +64,7 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
     const requestedBy = `by ${b.requestedBy}`;
 
     return (
-      <tr key={b.id}>
+      <tr key={b.id} onDoubleClick={() => doubleClickHandler(b.openInBrowserLink)}>
         <td>{b.projectName}</td>
         <td>{b.definitionName}</td>
         <td className='resultColumn' title={b.displayStatus}>
@@ -104,7 +110,7 @@ const BuildsTable = (props: { textFilter: string }) => {
   const spinner = context.builds.length === 0 ? <Spinner /> : undefined;
 
   const errorCloseHandler = () => {
-    context.dispatch({type: types.CLEAR_ERROR});
+    context.dispatch({ type: types.CLEAR_ERROR });
   };
 
   const errorDisplay = context.error ? (

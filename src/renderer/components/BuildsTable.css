@@ -2,6 +2,7 @@
     width: 100%;
     padding: 0;
     border-collapse: collapse;
+    cursor: default;
 }
 
 .BuildsTable thead th {
@@ -25,6 +26,10 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
+}
+
+.BuildsTable tr:hover {
+  background-color: #EEE;
 }
 
 .BuildsTable svg {

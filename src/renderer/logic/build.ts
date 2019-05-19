@@ -25,6 +25,11 @@ interface ITfsBuild {
   definition: { name: string };
   requestedBy: ITfsUser;
   requestedFor: ITfsUser;
+  _links: {
+    web: {
+      href: string;
+    };
+  };
 }
 
 interface ITfsBuildsResult {
@@ -52,6 +57,7 @@ interface IBuildView {
   sinceDisplay: string;
   sinceWhat: string;
   fulltextSearch: string;
+  openInBrowserLink: string;
 }
 
 const dispatchFetchBuildsInitial = (dispatch: React.Dispatch<IAction>) => {
@@ -129,7 +135,8 @@ const mapBuild = (build: ITfsBuild): IBuildView => {
     sinceWhat: sinceWhat,
     fulltextSearch: (`_${build.project.name}_${build.definition.name}_${displayStatus}
 _${build.requestedBy.displayName}_${build.requestedBy.uniqueName}
-_${build.requestedFor.displayName}_${build.requestedFor.uniqueName}_`).toLowerCase()
+_${build.requestedFor.displayName}_${build.requestedFor.uniqueName}_`).toLowerCase(),
+    openInBrowserLink: build._links.web.href
   };
 
   // tslint:enable: no-unsafe-any
