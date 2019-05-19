@@ -14,6 +14,7 @@
     "no-suspicious-comment": false,
     "strict-boolean-expressions": false,
     "newline-before-return": false,
+    "no-unnecessary-local-variable": false,
     //     
     "align": [true, "statements", "members", "elements"],
     "export-name": [

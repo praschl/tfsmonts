@@ -3,10 +3,34 @@ import { humanizer } from './humanizer';
 
 import { IAction } from '../context/IGlobalContext';
 import * as types from '../context/types';
+import { IAxiosResult } from './axiosHelpers';
 import { IProjectView } from './project';
 
 type BuildStates = 'notStarted' | 'postponed' | 'inProgress' | 'cancelling'
   | 'canceled' | 'succeeded' | 'partiallySucceeded' | 'failed' | 'unknown';
+
+interface ITfsUser {
+  displayName: string;
+  uniqueName: string;
+}
+
+interface ITfsBuild {
+  result: BuildStates;
+  id: number;
+  queueTime: string;
+  finishTime: string;
+  startTime: string;
+  status: BuildStates | 'completed';
+  project: { name: string };
+  definition: { name: string };
+  requestedBy: ITfsUser;
+  requestedFor: ITfsUser;
+}
+
+interface ITfsBuildsResult {
+  count: number;
+  value: ITfsBuild[];
+}
 
 interface IBuildView {
   id: number;
@@ -66,7 +90,7 @@ const getBuildsParams = (lastDate: Date | null) => {
   return [finishedBuildsParams, openBuildsParams];
 };
 
-const mapBuild = (build: any): IBuildView => {
+const mapBuild = (build: ITfsBuild): IBuildView => {
   // tslint:disable: no-unsafe-any
   const displayStatus = build.status === 'completed' ? build.result : build.status;
   const start = build.startTime ? new Date(build.startTime).getTime() : new Date().getTime();
@@ -124,12 +148,11 @@ const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams) => {
     const requestUrl = `${params.url}/DefaultCollection/${project.name}/_apis/build/builds`;
 
     return params.requestParams.map(async p => {
-      const r = await Axios.get(requestUrl, {
+      const r: IAxiosResult<ITfsBuildsResult> = await Axios.get(requestUrl, {
         params: p
       });
 
-      // tslint:disable-next-line: no-unsafe-any // TODO: create interface for the result
-      return <any[]>r.data.value;
+      return r.data.value;
     });
   })
     .flat();

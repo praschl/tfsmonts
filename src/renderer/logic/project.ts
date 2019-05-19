@@ -2,6 +2,18 @@ import Axios from 'axios';
 
 import { IAction } from '../context/IGlobalContext';
 import * as types from '../context/types';
+import { IAxiosResult } from './axiosHelpers';
+
+interface ITfsProject {
+  id: string;
+  name: string;
+  description: string;
+}
+
+interface ITfsProjectsResult {
+  count: number;
+  value: ITfsProject[];
+}
 
 interface IProjectView {
   id: string;
@@ -21,16 +33,13 @@ const fetchProjectsAsync = async (url: string) => {
 
   const requestUrl = `${url}/DefaultCollection/_apis/projects`;
 
-  const projectsResponse = await Axios.get(requestUrl);
+  const projectsResponse = <IAxiosResult<ITfsProjectsResult>>await Axios.get(requestUrl);
 
-  // tslint:disable: no-unsafe-any
-  const projects: IProjectView[] = projectsResponse.data.value.map((p: any) => {
-    // tslint:disable-next-line: no-unnecessary-local-variable // DISABLED its here to ensure the type
+  const projects: IProjectView[] = projectsResponse.data.value.map(p => {
     const result: IProjectView = { id: p.id, name: p.name };
 
     return result;
   });
-  // tslint:enable: no-unsafe-any
 
   return projects;
 };
