@@ -33,6 +33,7 @@ import ErrorDisplay from './Error/ErrorDisplay';
 import Spinner from './Spinner/Spinner';
 
 import * as electron from 'electron';
+import { humanizer } from '../logic/humanizer';
 
 const iconByState: { [state in BuildStates]: IconDefinition } = {
   notStarted: faEllipsisH,
@@ -63,6 +64,9 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
 
     const requestedBy = `by ${b.requestedBy}`;
 
+    const sinceTime = new Date().getTime() - b.changeTime.getTime();
+    const sinceDisplay = humanizer.humanize(sinceTime, { largest: 2 });
+
     return (
       <tr key={b.id} onDoubleClick={() => doubleClickHandler(b.openInBrowserLink)}>
         <td>{b.projectName}</td>
@@ -71,7 +75,7 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
           <FontAwesomeIcon icon={icon} className={iconClass} />
         </td>
         <td title={requestedBy}>{b.requestedFor}</td>
-        <td title={`${b.sinceWhat}: ${b.sinceTimeDisplay}`}>{b.sinceDisplay} ago</td>
+        <td title={`${b.sinceWhat}: ${b.sinceTimeDisplay}`}>{sinceDisplay} ago</td>
         <td>{b.durationDisplay}</td>
       </tr>
     );
@@ -154,7 +158,7 @@ const BuildsTable = (props: { textFilter: string }) => {
               downIcon={faSortAlphaDown}
               changeSort={changeSort} />
             <BuildHeader
-              columnName='sinceTime'
+              columnName='changeTime'
               sort={sort}
               name='Changed'
               title='Status changed to&#013;Queued/Started/Finished'

@@ -50,11 +50,10 @@ interface IBuildView {
   queueTime: Date;
   startTime: Date | null;
   finishTime: Date | null;
+  changeTime: Date;
   duration: number; // milliseconds of the duration
   durationDisplay: string;
-  sinceTime: number;
   sinceTimeDisplay: string;
-  sinceDisplay: string;
   sinceWhat: string;
   fulltextSearch: string;
   openInBrowserLink: string;
@@ -106,12 +105,10 @@ const mapBuild = (build: ITfsBuild): IBuildView => {
   const durationDisplay = humanizer.humanize(duration, { largest: 1 });
 
   const changeTime = new Date(build.finishTime || build.startTime || build.queueTime);
-  const sinceTime = new Date().getTime() - changeTime.getTime();
   const sinceTimeDisplay = changeTime.getDate() === new Date().getDate()
     ? changeTime.toLocaleTimeString()
     : changeTime.toLocaleString();
 
-  const sinceDisplay = humanizer.humanize(sinceTime, { largest: 2 });
   const sinceWhat = build.finishTime ? 'finished'
     : (build.startTime ? 'started' : 'queued');
 
@@ -127,11 +124,10 @@ const mapBuild = (build: ITfsBuild): IBuildView => {
     queueTime: new Date(build.queueTime),
     startTime: build.startTime ? new Date(build.startTime) : null,
     finishTime: build.finishTime ? new Date(build.finishTime) : null,
+    changeTime: changeTime,
     duration: duration,
     durationDisplay: durationDisplay,
-    sinceTime: sinceTime,
     sinceTimeDisplay: sinceTimeDisplay,
-    sinceDisplay: sinceDisplay,
     sinceWhat: sinceWhat,
     fulltextSearch: (`_${build.project.name}_${build.definition.name}_${displayStatus}
 _${build.requestedBy.displayName}_${build.requestedBy.uniqueName}
