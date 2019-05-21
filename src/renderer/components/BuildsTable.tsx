@@ -25,7 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalContext } from '../context/GlobalContext';
 import './BuildsTable.css';
 
-import { BuildStates, IBuildView } from '../logic/build';
+import { BuildDisplayStates, IBuildView } from '../logic/build';
 
 import * as types from '../context/types';
 import BuildHeader, { ISort } from './BuildHeader';
@@ -35,7 +35,7 @@ import Spinner from './Spinner/Spinner';
 import * as electron from 'electron';
 import { humanizer } from '../logic/humanizer';
 
-const iconByState: { [state in BuildStates]: IconDefinition } = {
+const iconByState: { [state in BuildDisplayStates]: IconDefinition } = {
   notStarted: faEllipsisH,
   postponed: faCalendarAlt,
   inProgress: faPlay,
@@ -46,7 +46,7 @@ const iconByState: { [state in BuildStates]: IconDefinition } = {
   partiallySucceeded: faExclamationTriangle,
   failed: faTimes,
   //
-  unknown: faQuestionCircle
+  completed: faQuestionCircle
 };
 
 const defaultSort: ISort = { column: 'projectName', order: 'asc' };
@@ -59,7 +59,7 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
   return builds.map(b => {
     let icon = iconByState[b.displayStatus];
     let iconClass = `state-${b.displayStatus}`;
-    if (!icon) { icon = iconByState.unknown; }
+    if (!icon) { icon = faQuestionCircle; }
     if (!iconClass) { iconClass = 'unknown'; }
 
     const requestedBy = `by ${b.requestedBy}`;

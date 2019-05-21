@@ -6,8 +6,11 @@ import * as types from '../context/types';
 import { IAxiosResult } from './axiosHelpers';
 import { IProjectView } from './project';
 
-type BuildStates = 'notStarted' | 'postponed' | 'inProgress' | 'cancelling'
-  | 'canceled' | 'succeeded' | 'partiallySucceeded' | 'failed' | 'unknown';
+type BuildResults = 'succeeded' | 'partiallySucceeded' | 'failed' | 'canceled';
+
+type BuildStates = 'inProgress' | 'completed' | 'cancelling' | 'postponed' | 'notStarted';
+
+type BuildDisplayStates = BuildResults | BuildStates;
 
 interface ITfsUser {
   displayName: string;
@@ -15,12 +18,12 @@ interface ITfsUser {
 }
 
 interface ITfsBuild {
-  result: BuildStates;
+  result: BuildResults;
   id: number;
   queueTime: string;
   finishTime: string;
   startTime: string;
-  status: BuildStates | 'completed';
+  status: BuildStates;
   project: { name: string };
   definition: { name: string };
   requestedBy: ITfsUser;
@@ -44,7 +47,7 @@ interface IBuildView {
   status: string;
   result?: string;
   // displayStatus: when status != completed, this is the status, when status == completed, its the result.
-  displayStatus: BuildStates;
+  displayStatus: BuildDisplayStates;
   requestedBy: string;
   requestedFor: string;
   queueTime: Date;
@@ -166,4 +169,11 @@ const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams) => {
   return allResults.map(mapBuild);
 };
 
-export { BuildStates, IBuildView, getBuildsParams, fetchBuildsAsync, dispatchFetchBuilds, dispatchFetchBuildsInitial };
+export {
+  BuildDisplayStates,
+  IBuildView,
+  getBuildsParams,
+  fetchBuildsAsync,
+  dispatchFetchBuilds,
+  dispatchFetchBuildsInitial
+};
