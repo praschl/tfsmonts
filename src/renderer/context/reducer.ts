@@ -23,6 +23,7 @@ const reducer: reducerType =
       case types.FETCH_BUILDS_INITIAL: {
         asyncActions.fetchBuilds(null,
           context.config.tfsUrl,
+          context.config.tfsDays,
           context.projects,
           context.dispatch);
         return context;
@@ -30,15 +31,16 @@ const reducer: reducerType =
       case types.FETCH_BUILDS: {
         asyncActions.fetchBuilds(context.lastBuildsFetchDate,
           context.config.tfsUrl,
+          context.config.tfsDays,
           context.projects,
           context.dispatch);
         return context;
       }
       case types.FETCH_BUILDS_SUCCESS: return actions.fetchBuildsSuccess(context, action);
       //
-      case types.SET_TFS_URL: {
+      case types.CONFIG_UPDATING: {
         asyncActions.fetchProjects(<string>action.tfsUrl, context.dispatch, true);
-        return actions.setTfsUrl(context, action);
+        return actions.setConfigValues(context, action);
       }
       //
       case types.SET_ERROR: return actions.setError(context, action);

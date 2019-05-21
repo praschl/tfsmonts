@@ -53,7 +53,7 @@ const fetchBuildsSuccess = (context: IGlobalContext, action: IAction): IGlobalCo
   };
 };
 
-const setTfsUrl = (context: IGlobalContext, action: IAction): IGlobalContext => {
+const setConfigValues = (context: IGlobalContext, action: IAction): IGlobalContext => {
   return {
     ...context,
     projects: [],
@@ -61,7 +61,8 @@ const setTfsUrl = (context: IGlobalContext, action: IAction): IGlobalContext => 
     lastBuildsFetchDate: null,
     config: {
       ...context.config,
-      tfsUrl: <string>action.tfsUrl
+      tfsUrl: <string>action.tfsUrl,
+      tfsDays: <number>action.tfsDays
     }
   };
 };
@@ -74,4 +75,4 @@ const clearError = (context: IGlobalContext): IGlobalContext => {
   return { ...context, error: undefined };
 };
 
-export { fetchProjectsSuccess, fetchBuildsSuccess, setTfsUrl, setError, clearError };
+export { fetchProjectsSuccess, fetchBuildsSuccess, setConfigValues, setError, clearError };

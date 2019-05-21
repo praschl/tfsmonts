@@ -70,7 +70,7 @@ const dispatchFetchBuilds = (dispatch: React.Dispatch<IAction>) => {
   dispatch({ type: types.FETCH_BUILDS });
 };
 
-const getBuildsParams = (lastDate: Date | null) => {
+const getBuildsParams = (lastDate: Date | null, daysToGet: number) => {
   const openBuildsParams = {
     ['api-version']: 2.3,
     statusFilter: 'inProgress,cancelling,postponed,notStarted'
@@ -81,7 +81,7 @@ const getBuildsParams = (lastDate: Date | null) => {
   let requestMinDate: Date;
   if (lastDate === null) {
     requestMinDate = new Date();
-    requestMinDate.setDate(requestMinDate.getDate() - 3);
+    requestMinDate.setDate(requestMinDate.getDate() - daysToGet);
   } else {
     requestMinDate = lastDate;
   }

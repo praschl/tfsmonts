@@ -10,6 +10,7 @@ export interface IGlobalContext {
   error?: string;
   config: {
     tfsUrl: string;
+    tfsDays: number;
   };
 }
 
@@ -20,5 +21,6 @@ export interface IAction {
   builds?: IBuildView[];
   requestDate?: Date;
   tfsUrl?: string;
+  tfsDays?: number;
   error?: string;
 }

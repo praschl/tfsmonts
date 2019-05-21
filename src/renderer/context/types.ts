@@ -6,7 +6,7 @@ export const FETCH_BUILDS = 'FETCH_BUILDS';
 export const FETCH_BUILDS_INITIAL = 'FETCH_BUILDS_INITIAL';
 export const FETCH_BUILDS_SUCCESS = 'FETCH_BUILDS_SUCCESS';
 
-export const SET_TFS_URL = 'SET_TFS_URL';
+export const CONFIG_UPDATING = 'CONFIG_UPDATING';
 
 export const SET_ERROR = 'SET_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';

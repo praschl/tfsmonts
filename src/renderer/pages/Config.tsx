@@ -46,6 +46,7 @@ function Config() {
   const router = useRouter();
   const { context } = useGlobalContext();
   const [tfsUrl, setTfsUrl] = React.useState(context.config.tfsUrl);
+  const [tfsDays, setTfsDays] = React.useState(context.config.tfsDays);
 
   const initialTfsUrlState = !tfsUrl ? 'invalid' : 'valid';
   const [tfsUrlState, setTfsUrlState] = React.useState<UrlState>(initialTfsUrlState);
@@ -53,10 +54,12 @@ function Config() {
   const exitButtonEnabled = tfsUrlState === 'valid';
 
   const exitClickHandler = () => {
-    // tslint:disable-next-line: no-backbone-get-set-outside-model
+    // tslint:disable: no-backbone-get-set-outside-model
     settings.set('tfsurl', tfsUrl);
+    settings.set('tfsdays', tfsDays);
+    // tslint:enable: no-backbone-get-set-outside-model
 
-    context.dispatch({ type: types.SET_TFS_URL, tfsUrl: tfsUrl });
+    context.dispatch({ type: types.CONFIG_UPDATING, tfsUrl: tfsUrl, tfsDays: tfsDays });
     router.history.push('/');
   };
 
@@ -65,6 +68,11 @@ function Config() {
     setTfsUrl(url);
 
     checkUrlIsValid(url, setTfsUrlState);
+  };
+
+  const tfsDaysChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const days: number = parseInt(event.target.value, 10);
+    setTfsDays(days);
   };
 
   const icon: IconDefinition = iconsByState[tfsUrlState];
@@ -87,11 +95,28 @@ function Config() {
           placeholder='https://your.tfs:8080/tfs'
           onChange={urlChangeHandler}
           value={tfsUrl} />
-
         <span className={checkStyles.join(' ')}>
           <FontAwesomeIcon icon={icon} />
         </span>
       </div>
+
+      <div className='config'>
+        <label htmlFor='tfsDays'>Number of days to get from the tfs server:</label>
+        <br />
+        <input id='tfsDays'
+          className='days'
+          type='number'
+          onChange={tfsDaysChangeHandler}
+          value={tfsDays}
+          min={1}
+          max={30}
+          step={1}
+          aria-valuemin={1}
+          aria-valuemax={30}
+          aria-valuenow={tfsDays}
+        />
+      </div>
+
       <div style={{ height: '100px' }}></div>
       <BoilerPlateCredits />
       <IconCredits />

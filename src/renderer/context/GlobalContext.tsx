@@ -12,6 +12,7 @@ import * as project from '../logic/project';
 import * as settings from 'electron-settings';
 
 const tfsUrl: string = settings.get('tfsurl', '') as string;
+const tfsDays: number = settings.get('tfsdays', 3)  as number;
 
 const initialContext: IGlobalContext = {
   dispatch: (action: IAction) => undefined, // this is for intellisense and will be overridden at (1)
@@ -21,7 +22,8 @@ const initialContext: IGlobalContext = {
   config: {
     // DISABLED: default will be removed soonish (when load/save of settings is implemented)
     // tslint:disable-next-line: no-http-string
-    tfsUrl: tfsUrl
+    tfsUrl: tfsUrl,
+    tfsDays: tfsDays
   }
 };
 

@@ -1,13 +1,13 @@
 .config {
     width: 100%;
     font-size: 1.2rem;
-    margin: 5pt;
-    padding: 2pt 4pt;    
+    padding: 10pt;
     white-space: nowrap;
     font-weight: bold;
 }
 
-.config .url {
+.config .url,
+.config .days {
     font-size: 1.2rem;
     width: 30rem;
     margin: 5pt 0;

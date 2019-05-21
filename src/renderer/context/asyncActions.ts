@@ -26,10 +26,11 @@ const fetchProjects = (tfsUrl: string, dispatch: React.Dispatch<IAction>, initia
 const fetchBuilds = (
   lastBuildsFetchDate: Date | null,
   tfsUrl: string,
+  tfsDays: number,
   projects: project.IProjectView[],
   dispatch: React.Dispatch<IAction>
 ) => {
-  const requestParams = build.getBuildsParams(lastBuildsFetchDate);
+  const requestParams = build.getBuildsParams(lastBuildsFetchDate, tfsDays);
 
   const requestStartDate = new Date();
 
