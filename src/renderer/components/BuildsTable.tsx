@@ -30,6 +30,7 @@ import { BuildDisplayStates, IBuildView } from '../logic/build';
 import * as types from '../context/types';
 import BuildHeader, { ISort } from './BuildHeader';
 import ErrorDisplay from './Error/ErrorDisplay';
+import FolderButton from './FolderButton';
 import Spinner from './Spinner/Spinner';
 
 import * as electron from 'electron';
@@ -55,6 +56,10 @@ const doubleClickHandler = (url: string) => {
   electron.shell.openExternal(url);
 };
 
+const openFolderClick = (buildId: number) => {
+  console.log('click', buildId);
+};
+
 const mapBuildsToRows = (builds: IBuildView[]) => {
   return builds.map(b => {
     let icon = iconByState[b.displayStatus];
@@ -77,11 +82,13 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
         <td title={requestedBy}>{b.requestedFor}</td>
         <td title={`${b.sinceWhat}: ${b.sinceTimeDisplay}`}>{sinceDisplay} ago</td>
         <td>{b.durationDisplay}</td>
+        {/* <td><FolderButton clickHandler={() => openFolderClick(b.id)} /></td> */}
       </tr>
     );
   });
 };
 
+// tslint:disable-next-line: max-func-body-length
 const BuildsTable = (props: { textFilter: string }) => {
   const { context } = useGlobalContext();
 
@@ -172,6 +179,12 @@ const BuildsTable = (props: { textFilter: string }) => {
               upIcon={faSortAmountUp}
               downIcon={faSortAmountDown}
               changeSort={changeSort} />
+            {/* <BuildHeader
+              columnName='openDrop'
+              name=''
+              title='Open drop folder'
+              // tslint:disable-next-line: no-empty
+              changeSort={() => { }} /> */}
           </tr>
         </thead>
         <tbody>

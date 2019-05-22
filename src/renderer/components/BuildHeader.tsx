@@ -7,9 +7,9 @@ interface IBuildHeaderProps {
   name: string;
   title?: string;
   columnName: string;
-  sort: ISort;
-  upIcon: IconDefinition;
-  downIcon: IconDefinition;
+  sort?: ISort;
+  upIcon?: IconDefinition;
+  downIcon?: IconDefinition;
   changeSort(columnName: string): void;
 }
 
@@ -20,7 +20,7 @@ export interface ISort {
 
 const BuildHeader = (props: IBuildHeaderProps) => {
   let sortIcon: JSX.Element = <></>;
-  if (props.sort.column === props.columnName) {
+  if (props.sort && props.sort.column === props.columnName && props.upIcon && props.downIcon) {
     const icon = props.sort.order === 'asc' ? props.upIcon : props.downIcon;
     sortIcon = <FontAwesomeIcon icon={icon} />;
   }
