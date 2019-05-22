@@ -1,11 +1,12 @@
 .folderButton {
-  color: #FFCC66;
+  width: 2rem;
+  color: #BBBBBB;
+  background-color: transparent;
   border: none;
   margin: 0;
   padding: 0;
-  background-color: transparent;
 }
 
 .folderButton:hover {
-  background-color: #EEE;
+  color: #ffAA55;
 }

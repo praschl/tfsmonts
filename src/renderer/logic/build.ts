@@ -6,6 +6,8 @@ import * as types from '../context/types';
 import { IAxiosResult } from './axiosHelpers';
 import { IProjectView } from './project';
 
+import * as config from '../context/GlobalConfig';
+
 type BuildResults = 'succeeded' | 'partiallySucceeded' | 'failed' | 'canceled';
 
 type BuildStates = 'inProgress' | 'completed' | 'cancelling' | 'postponed' | 'notStarted';
@@ -17,6 +19,19 @@ interface ITfsUser {
   uniqueName: string;
 }
 
+interface ITfsBuildDropFolderArtifact {
+  name: string; // should be "drop"
+  resource: {
+    data: string; // the file path
+    type: string; // should be "FilePath"
+  };
+}
+
+interface ITfsBuildDropFolderArtifactResult {
+  count: number;
+  value: ITfsBuildDropFolderArtifact[];
+}
+
 interface ITfsBuild {
   result: BuildResults;
   id: number;
@@ -24,7 +39,10 @@ interface ITfsBuild {
   finishTime: string;
   startTime: string;
   status: BuildStates;
-  project: { name: string };
+  project: {
+    id: string;
+    name: string;
+  };
   definition: { name: string };
   requestedBy: ITfsUser;
   requestedFor: ITfsUser;
@@ -99,7 +117,6 @@ const getBuildsParams = (lastDate: Date | null, daysToGet: number) => {
 };
 
 const mapBuild = (build: ITfsBuild): IBuildView => {
-  // tslint:disable: no-unsafe-any
   const displayStatus = build.status === 'completed' ? build.result : build.status;
   const start = build.startTime ? new Date(build.startTime).getTime() : new Date().getTime();
   const end = build.finishTime ? new Date(build.finishTime).getTime() : new Date().getTime();
@@ -137,8 +154,6 @@ _${build.requestedBy.displayName}_${build.requestedBy.uniqueName}
 _${build.requestedFor.displayName}_${build.requestedFor.uniqueName}_`).toLowerCase(),
     openInBrowserLink: build._links.web.href
   };
-
-  // tslint:enable: no-unsafe-any
 };
 
 interface IFetchBuildsAsyncParams {
@@ -169,11 +184,26 @@ const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams) => {
   return allResults.map(mapBuild);
 };
 
+const getBuildDropFolder = async (projectName: string, buildId: number) => {
+  // tslint:disable-next-line: max-line-length
+  const requestUrl = `${config.tfsUrl()}/DefaultCollection/${projectName}/_apis/build/builds/${buildId}/artifacts?api-version=2.3`;
+
+  const response: IAxiosResult<ITfsBuildDropFolderArtifactResult> = await Axios.get(requestUrl);
+
+  const filePathArtifact = response.data.value.find(a => a.name === 'drop' && a.resource.type === 'FilePath');
+  if (filePathArtifact) {
+    return filePathArtifact.resource.data;
+  } else {
+    return '';
+  }
+};
+
 export {
   BuildDisplayStates,
   IBuildView,
   getBuildsParams,
   fetchBuildsAsync,
   dispatchFetchBuilds,
-  dispatchFetchBuildsInitial
+  dispatchFetchBuildsInitial,
+  getBuildDropFolder
 };

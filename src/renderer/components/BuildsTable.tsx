@@ -25,7 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalContext } from '../context/GlobalContext';
 import './BuildsTable.css';
 
-import { BuildDisplayStates, IBuildView } from '../logic/build';
+import { BuildDisplayStates, getBuildDropFolder, IBuildView } from '../logic/build';
 
 import * as types from '../context/types';
 import BuildHeader, { ISort } from './BuildHeader';
@@ -56,8 +56,12 @@ const doubleClickHandler = (url: string) => {
   electron.shell.openExternal(url);
 };
 
-const openFolderClick = (buildId: number) => {
-  console.log('click', buildId);
+const openFolderClick = (projectName: string, buildId: number) => {
+  getBuildDropFolder(projectName, buildId)
+  .then(r => {
+    electron.shell.openExternal(r);
+  })
+  .catch(e => console.error(e));
 };
 
 const mapBuildsToRows = (builds: IBuildView[]) => {
@@ -82,7 +86,11 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
         <td title={requestedBy}>{b.requestedFor}</td>
         <td title={`${b.sinceWhat}: ${b.sinceTimeDisplay}`}>{sinceDisplay} ago</td>
         <td>{b.durationDisplay}</td>
-        {/* <td><FolderButton clickHandler={() => openFolderClick(b.id)} /></td> */}
+        <td>
+          <FolderButton
+            title='Open drop folder'
+            clickHandler={() => openFolderClick(b.projectName, b.id)} />
+        </td>
       </tr>
     );
   });
@@ -179,12 +187,12 @@ const BuildsTable = (props: { textFilter: string }) => {
               upIcon={faSortAmountUp}
               downIcon={faSortAmountDown}
               changeSort={changeSort} />
-            {/* <BuildHeader
+            <BuildHeader
               columnName='openDrop'
               name=''
               title='Open drop folder'
               // tslint:disable-next-line: no-empty
-              changeSort={() => { }} /> */}
+              changeSort={() => { }} />
           </tr>
         </thead>
         <tbody>
