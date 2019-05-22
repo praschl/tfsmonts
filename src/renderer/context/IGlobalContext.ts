@@ -8,10 +8,6 @@ export interface IGlobalContext {
   builds: IBuildView[];
   lastBuildsFetchDate: Date | null;
   error?: string;
-  config: {
-    tfsUrl: string;
-    tfsDays: number;
-  };
 }
 
 export interface IAction {
@@ -20,7 +16,5 @@ export interface IAction {
   projects?: IProjectView[];
   builds?: IBuildView[];
   requestDate?: Date;
-  tfsUrl?: string;
-  tfsDays?: number;
   error?: string;
 }

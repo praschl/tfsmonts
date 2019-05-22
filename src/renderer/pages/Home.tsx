@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
 import BuildsList from '../containers/BuildsList';
-import { useGlobalContext } from '../context/GlobalContext';
+
+import * as config from '../context/GlobalConfig';
 
 export default function Home() {
-  const { context } = useGlobalContext();
-
   let redirect: JSX.Element | null = null;
-  if (!context.config.tfsUrl) {
+  if (!config.tfsUrl()) {
     redirect = <Redirect to='/config' />;
   }
 

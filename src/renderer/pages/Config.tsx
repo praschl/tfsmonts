@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
-import * as settings from 'electron-settings';
 import * as React from 'react';
 
 import BoilerPlateCredits from '../components/credits/BoilerPlateCredits';
@@ -17,6 +16,8 @@ import { useGlobalContext } from '../context/GlobalContext';
 import * as types from '../context/types';
 import { useRouter } from '../router/CustomRouter';
 import './Config.css';
+
+import * as config from '../context/GlobalConfig';
 
 type UrlState = 'valid' | 'invalid';
 
@@ -45,8 +46,8 @@ function checkUrlIsValid(url: string, setTfsUrlState: React.Dispatch<React.SetSt
 function Config() {
   const router = useRouter();
   const { context } = useGlobalContext();
-  const [tfsUrl, setTfsUrl] = React.useState(context.config.tfsUrl);
-  const [tfsDays, setTfsDays] = React.useState(context.config.tfsDays);
+  const [tfsUrl, setTfsUrl] = React.useState(config.tfsUrl());
+  const [tfsDays, setTfsDays] = React.useState(config.tfsDays());
 
   const initialTfsUrlState = !tfsUrl ? 'invalid' : 'valid';
   const [tfsUrlState, setTfsUrlState] = React.useState<UrlState>(initialTfsUrlState);
@@ -54,12 +55,11 @@ function Config() {
   const exitButtonEnabled = tfsUrlState === 'valid';
 
   const exitClickHandler = () => {
-    // tslint:disable: no-backbone-get-set-outside-model
-    settings.set('tfsurl', tfsUrl);
-    settings.set('tfsdays', tfsDays);
-    // tslint:enable: no-backbone-get-set-outside-model
+    config.setTfsUrl(tfsUrl);
+    config.setTfsDays(tfsDays);
 
-    context.dispatch({ type: types.CONFIG_UPDATING, tfsUrl: tfsUrl, tfsDays: tfsDays });
+    context.dispatch({ type: types.FETCH_PROJECTS_INITIAL });
+
     router.history.push('/');
   };
 
