@@ -6,7 +6,7 @@ import * as types from '../context/types';
 import { IAxiosResult } from './axiosHelpers';
 import { IProjectView } from './project';
 
-import * as config from '../context/GlobalConfig';
+import { config } from '../context/config';
 
 type BuildResults = 'succeeded' | 'partiallySucceeded' | 'failed' | 'canceled';
 
@@ -186,7 +186,7 @@ const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams) => {
 
 const getBuildDropFolder = async (projectName: string, buildId: number) => {
   // tslint:disable-next-line: max-line-length
-  const requestUrl = `${config.tfsUrl()}/DefaultCollection/${projectName}/_apis/build/builds/${buildId}/artifacts?api-version=2.3`;
+  const requestUrl = `${config.tfsUrl}/DefaultCollection/${projectName}/_apis/build/builds/${buildId}/artifacts?api-version=2.3`;
 
   const response: IAxiosResult<ITfsBuildDropFolderArtifactResult> = await Axios.get(requestUrl);
 

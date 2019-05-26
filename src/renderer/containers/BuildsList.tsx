@@ -25,6 +25,7 @@ function BuildsList() {
   return (
     <>
       <NavHeader title='Builds'>
+
         <input id='builds-search'
           type='text'
           placeholder='Type to filter'

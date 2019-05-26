@@ -16,6 +16,7 @@
     "newline-before-return": false,
     "no-unnecessary-local-variable": false,
     "no-void-expression": false,
+    "completed-docs": false,
     //
     "react-this-binding-issue": false, // that shouldn't  be a problem since we are not going to use alot of classes with react 16.8 and hooks
     //

@@ -5,7 +5,7 @@ import * as project from '../logic/project';
 import { IAction } from './IGlobalContext';
 import * as types from './types';
 
-import * as config from '../context/GlobalConfig';
+import { config } from './config';
 
 // methods here should
 // get the parameters they need and dispatch() as parameter
@@ -13,7 +13,7 @@ import * as config from '../context/GlobalConfig';
 // not pass dispatch to other methods
 
 const fetchProjects = (dispatch: React.Dispatch<IAction>, initial: boolean) => {
-  project.fetchProjectsAsync(config.tfsUrl())
+  project.fetchProjectsAsync(config.tfsUrl)
     .then(projects => {
       dispatch({ type: types.FETCH_PROJECTS_SUCCESS, projects: projects });
       if (initial) {
@@ -30,12 +30,12 @@ const fetchBuilds = (
   projects: project.IProjectView[],
   dispatch: React.Dispatch<IAction>
 ) => {
-  const requestParams = build.getBuildsParams(lastBuildsFetchDate, config.tfsDays());
+  const requestParams = build.getBuildsParams(lastBuildsFetchDate, config.tfsDays);
 
   const requestStartDate = new Date();
 
   build.fetchBuildsAsync({
-    url: config.tfsUrl(),
+    url: config.tfsUrl,
     projects: projects,
     requestParams: requestParams
   })

@@ -17,7 +17,7 @@ import * as types from '../context/types';
 import { useRouter } from '../router/CustomRouter';
 import './Config.css';
 
-import * as config from '../context/GlobalConfig';
+import { config } from '../context/config';
 
 type UrlState = 'valid' | 'invalid';
 
@@ -46,8 +46,8 @@ function checkUrlIsValid(url: string, setTfsUrlState: React.Dispatch<React.SetSt
 function Config() {
   const router = useRouter();
   const { context } = useGlobalContext();
-  const [tfsUrl, setTfsUrl] = React.useState(config.tfsUrl());
-  const [tfsDays, setTfsDays] = React.useState(config.tfsDays());
+  const [tfsUrl, setTfsUrl] = React.useState(config.tfsUrl);
+  const [tfsDays, setTfsDays] = React.useState(config.tfsDays);
 
   const initialTfsUrlState = !tfsUrl ? 'invalid' : 'valid';
   const [tfsUrlState, setTfsUrlState] = React.useState<UrlState>(initialTfsUrlState);
