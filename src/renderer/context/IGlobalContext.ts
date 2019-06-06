@@ -11,7 +11,7 @@ export interface IGlobalContext {
 }
 
 export interface IAction {
-// tslint:disable-next-line: no-reserved-keywords // DISABLED because "type" is very commonly used for actions
+  // tslint:disable-next-line: no-reserved-keywords // DISABLED because "type" is very commonly used for actions
   type: string;
   projects?: IProjectView[];
   builds?: IBuildView[];
