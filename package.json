@@ -1,7 +1,9 @@
 {
-  "name": "electron-webpack-quick-start",
-  "version": "0.0.0",
+  "name": "tfsmonts",
+  "version": "0.0.2",
+  "description": "A monitor for tfs builds and releases",
   "license": "MIT",
+  "author": "Michael Praschl",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
