@@ -14,10 +14,10 @@ import NavButton from '../components/NavButton';
 import NavHeader from '../components/NavHeader';
 import { useGlobalContext } from '../context/GlobalContext';
 import * as types from '../context/types';
-import { useRouter } from '../router/CustomRouter';
 import './Config.css';
 
 import { config } from '../context/config';
+import { ISetPageProps } from '../context/PageContext';
 
 type UrlState = 'valid' | 'invalid';
 
@@ -45,8 +45,8 @@ function checkUrlIsValid(url: string, setTfsUrlState: React.Dispatch<React.SetSt
     });
 }
 
-function Config() {
-  const router = useRouter();
+function Config(props: ISetPageProps) {
+
   const { context } = useGlobalContext();
   const [tfsUrl, setTfsUrl] = React.useState(config.tfsUrl);
   const [tfsDays, setTfsDays] = React.useState(config.tfsDays);
@@ -61,8 +61,7 @@ function Config() {
     config.setTfsDays(tfsDays);
 
     context.dispatch({ type: types.FETCH_PROJECTS_INITIAL });
-
-    router.history.push('/');
+    props.setPage('/');
   };
 
   const urlChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
