@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 import * as React from 'react';
 
-import BoilerPlateCredits from '../components/credits/BoilerPlateCredits';
 import IconCredits from '../components/credits/IconCredits';
 import NavButton from '../components/NavButton';
 import NavHeader from '../components/NavHeader';
@@ -117,7 +116,6 @@ function Config(props: ISetPageProps) {
       </div>
 
       <div style={{ height: '100px' }}></div>
-      <BoilerPlateCredits />
       <IconCredits />
     </>);
 }
