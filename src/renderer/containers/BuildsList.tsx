@@ -6,20 +6,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BuildsTable from '../components/BuildsTable';
 import NavButton from '../components/NavButton';
 import NavHeader from '../components/NavHeader';
-import { useRouter } from '../router/CustomRouter';
+import { ISetPageProps } from '../context/PageContext';
 
 import './BuildsList.css';
 
-function BuildsList() {
+function BuildsList(props: ISetPageProps) {
   const [textFilter, setTextFilter] = React.useState('');
-  const routeProps = useRouter();
 
   const onFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextFilter(event.target.value);
   };
 
   const settingsClickHandler = () => {
-    routeProps.history.push('/config');
+      props.setPage('/config');
   };
 
   return (

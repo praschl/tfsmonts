@@ -20,4 +20,4 @@ This is a rewrite of https://github.com/praschl/TeamBuildMonitor which used the 
 flexible, easier to use and has much more functionality, which will let me create more exciting features.
 
 ## Boilerplate used
-https://github.com/Devtography/electron-react-typescript-webpack-boilerplate/
+https://github.com/electron-userland/electron-webpack + react + typescript

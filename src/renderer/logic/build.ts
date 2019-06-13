@@ -162,8 +162,8 @@ interface IFetchBuildsAsyncParams {
   requestParams: any[];
 }
 
-const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams) => {
-  if (!params.url) { return; }
+const fetchBuildsAsync = async (params: IFetchBuildsAsyncParams): Promise<IBuildView[]> => {
+  if (!params.url) { return []; }
 
   const allPromises = params.projects.map(project => {
     const requestUrl = `${params.url}/DefaultCollection/${project.name}/_apis/build/builds`;

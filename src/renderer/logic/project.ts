@@ -33,7 +33,7 @@ const fetchProjectsAsync = async (url: string) => {
 
   const requestUrl = `${url}/DefaultCollection/_apis/projects`;
 
-  const projectsResponse = <IAxiosResult<ITfsProjectsResult>>await Axios.get(requestUrl);
+  const projectsResponse: IAxiosResult<ITfsProjectsResult> = await Axios.get(requestUrl);
 
   const projects: IProjectView[] = projectsResponse.data.value.map(p => {
     const result: IProjectView = { id: p.id, name: p.name };
