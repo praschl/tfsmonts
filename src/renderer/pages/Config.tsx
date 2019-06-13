@@ -37,10 +37,8 @@ function checkUrlIsValid(url: string, setTfsUrlState: React.Dispatch<React.SetSt
 
   Axios.get(requestUrl)
     .then(_ => {
-      console.log("OK", _);
       setTfsUrlState('valid');
     }, _ => {
-      console.log("FAIL", _);
       setTfsUrlState('invalid');
     });
 }

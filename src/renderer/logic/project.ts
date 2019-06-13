@@ -33,17 +33,6 @@ const fetchProjectsAsync = async (url: string) => {
 
   const requestUrl = `${url}/DefaultCollection/_apis/projects`;
 
-  // fetch works... axios doesn't work
-  fetch(requestUrl , { credentials: 'include'})
-  .then(r => r.json())
-  .then (r => {
-    console.log(r);
-  })
-  .catch(e => {
-    console.log('ERROR: FETCH FAILED');
-    console.log(e);
-  });
-
   const projectsResponse: IAxiosResult<ITfsProjectsResult> = await Axios.get(requestUrl);
 
   const projects: IProjectView[] = projectsResponse.data.value.map(p => {
