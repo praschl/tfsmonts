@@ -10,6 +10,11 @@
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "lint": "tslint --project ."
+  },  
+  "build": {
+    "appId": "com.github.praschl.tfsmonts",
+    "productName": "TFS Monitor",
+    "buildVersion": "1.0.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
