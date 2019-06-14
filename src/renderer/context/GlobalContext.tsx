@@ -13,7 +13,7 @@ const initialContext: IGlobalContext = {
   dispatch: (action: IAction) => undefined, // this is for intellisense and will be overridden at (1)
   projects: [],
   builds: [],
-  lastBuildsFetchDate: null
+  lastBuildsFetchDate: undefined
 };
 
 const GlobalContext = React.createContext(initialContext);

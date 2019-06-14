@@ -23,6 +23,7 @@ interface ITfsBuildDropFolderArtifact {
   name: string; // should be "drop"
   resource: {
     data: string; // the file path
+    // tslint:disable-next-line: no-reserved-keywords - interface to TFS api, cant change this name.
     type: string; // should be "FilePath"
   };
 }
@@ -69,8 +70,8 @@ interface IBuildView {
   requestedBy: string;
   requestedFor: string;
   queueTime: Date;
-  startTime: Date | null;
-  finishTime: Date | null;
+  startTime: Date | undefined;
+  finishTime: Date | undefined;
   changeTime: Date;
   duration: number; // milliseconds of the duration
   durationDisplay: string;
@@ -88,7 +89,7 @@ const dispatchFetchBuilds = (dispatch: React.Dispatch<IAction>) => {
   dispatch({ type: types.FETCH_BUILDS });
 };
 
-const getBuildsParams = (lastDate: Date | null, daysToGet: number) => {
+const getBuildsParams = (lastDate: Date | undefined, daysToGet: number) => {
   const openBuildsParams = {
     ['api-version']: 2.3,
     statusFilter: 'inProgress,cancelling,postponed,notStarted'
@@ -97,7 +98,7 @@ const getBuildsParams = (lastDate: Date | null, daysToGet: number) => {
   // request builds since last request
   // if this is the first request, get the builds of the last few days.
   let requestMinDate: Date;
-  if (lastDate === null) {
+  if (!lastDate) {
     requestMinDate = new Date();
     requestMinDate.setDate(requestMinDate.getDate() - daysToGet);
   } else {
@@ -142,8 +143,8 @@ const mapBuild = (build: ITfsBuild): IBuildView => {
     requestedBy: build.requestedBy.displayName,
     requestedFor: build.requestedFor.displayName,
     queueTime: new Date(build.queueTime),
-    startTime: build.startTime ? new Date(build.startTime) : null,
-    finishTime: build.finishTime ? new Date(build.finishTime) : null,
+    startTime: build.startTime ? new Date(build.startTime) : undefined,
+    finishTime: build.finishTime ? new Date(build.finishTime) : undefined,
     changeTime: changeTime,
     duration: duration,
     durationDisplay: durationDisplay,

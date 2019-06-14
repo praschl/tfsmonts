@@ -21,12 +21,13 @@ const fetchProjects = (dispatch: React.Dispatch<IAction>, initial: boolean) => {
       }
     })
     .catch(error => {
+      // tslint:disable-next-line: no-unsafe-any - will be converted to string for display
       dispatch({ type: types.SET_ERROR, error: error });
     });
 };
 
 const fetchBuilds = (
-  lastBuildsFetchDate: Date | null,
+  lastBuildsFetchDate: Date | undefined,
   projects: project.IProjectView[],
   dispatch: React.Dispatch<IAction>
 ) => {
@@ -43,7 +44,8 @@ const fetchBuilds = (
       dispatch({ type: types.FETCH_BUILDS_SUCCESS, builds: builds, requestDate: requestStartDate });
     })
     .catch(error => {
-      dispatch({ type: types.SET_ERROR, error: error });
+      // tslint:disable-next-line: no-unsafe-any - will be converted to string for display
+      dispatch({ type: types.SET_ERROR, error: <string>error });
     });
 };
 

@@ -10,14 +10,14 @@ const iconSource = path.join(__static, '/assets/helmet.png');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
-let mainWindow : BrowserWindow | null;
+let mainWindow: BrowserWindow | undefined;
 
 function createMainWindow() {
   const window = new BrowserWindow({
     height: 800,
     width: 1200,
     title: 'TFS Monitor',
-// tslint:disable-next-line: no-unsafe-any
+    // tslint:disable-next-line: no-unsafe-any
     icon: iconSource,
     webPreferences: {
       webSecurity: false
@@ -39,7 +39,7 @@ function createMainWindow() {
   }
 
   window.on('closed', () => {
-    mainWindow = null;
+    mainWindow = undefined;
   });
 
   window.webContents.on('devtools-opened', () => {
@@ -62,7 +62,7 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   // on macOS it is common to re-create a window even after all windows have been closed
-  if (mainWindow === null) {
+  if (!mainWindow) {
     mainWindow = createMainWindow();
   }
 });

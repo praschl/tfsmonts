@@ -12,7 +12,7 @@ const reducer: reducerType =
     switch (action.type) {
       case types.FETCH_PROJECTS_INITIAL: {
         asyncActions.fetchProjects(context.dispatch, true);
-        return {...context, builds: [], projects: [], lastBuildsFetchDate: null};
+        return { ...context, builds: [], projects: [], lastBuildsFetchDate: undefined };
       }
       case types.FETCH_PROJECTS: {
         asyncActions.fetchProjects(context.dispatch, false);
@@ -21,7 +21,7 @@ const reducer: reducerType =
       case types.FETCH_PROJECTS_SUCCESS: return actions.fetchProjectsSuccess(context, action);
       //
       case types.FETCH_BUILDS_INITIAL: {
-        asyncActions.fetchBuilds(null,
+        asyncActions.fetchBuilds(undefined,
           context.projects,
           context.dispatch);
         return context;

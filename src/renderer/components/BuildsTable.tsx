@@ -58,10 +58,10 @@ const doubleClickHandler = (url: string) => {
 
 const openFolderClick = (projectName: string, buildId: number) => {
   getBuildDropFolder(projectName, buildId)
-  .then(r => {
-    electron.shell.openExternal(r);
-  })
-  .catch(e => console.error(e));
+    .then(r => {
+      electron.shell.openExternal(r);
+    })
+    .catch(e => console.error(e));
 };
 
 const mapBuildsToRows = (builds: IBuildView[]) => {
@@ -112,6 +112,7 @@ const BuildsTable = (props: { textFilter: string }) => {
   const textFilter = props.textFilter.toLowerCase();
 
   if (!context.builds) {
+    // tslint:disable-next-line: no-null-keyword - reactjs
     return null;
   }
 
@@ -136,7 +137,7 @@ const BuildsTable = (props: { textFilter: string }) => {
     <ErrorDisplay
       message={context.error.toString()}
       closeClick={errorCloseHandler} />)
-    : null;
+    : undefined;
 
   return (
     <>

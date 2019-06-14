@@ -6,7 +6,7 @@ export interface IGlobalContext {
   dispatch: React.Dispatch<IAction>;
   projects: IProjectView[];
   builds: IBuildView[];
-  lastBuildsFetchDate: Date | null;
+  lastBuildsFetchDate?: Date;
   error?: string;
 }
 
