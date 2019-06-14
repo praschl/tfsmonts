@@ -29,11 +29,12 @@ import { BuildDisplayStates, getBuildDropFolder, IBuildView } from '../logic/bui
 
 import * as types from '../context/types';
 import BuildHeader, { ISort } from './BuildHeader';
-import ErrorDisplay from './Error/ErrorDisplay';
 import FolderButton from './FolderButton';
+import MessagePanel from './MessagePanel/MessagePanel';
 import Spinner from './Spinner/Spinner';
 
 import * as electron from 'electron';
+import { IAction } from '../context/IGlobalContext';
 import { humanizer } from '../logic/humanizer';
 
 const iconByState: { [state in BuildDisplayStates]: IconDefinition } = {
@@ -56,15 +57,25 @@ const doubleClickHandler = (url: string) => {
   electron.shell.openExternal(url);
 };
 
-const openFolderClick = (projectName: string, buildId: number) => {
+const openFolderClick = (projectName: string, buildId: number, dispatch: React.Dispatch<IAction>) => {
+
   getBuildDropFolder(projectName, buildId)
     .then(r => {
-      electron.shell.openExternal(r);
+      if (!r) {
+        dispatch({type: types.SET_ERROR, error: {text: 'Drop folder not available!', level: 'warn'}});
+      } else {
+        electron.shell.openExternal(r);
+      }
     })
-    .catch(e => console.error(e));
+    .catch(e => {
+      const message = e as string;
+      dispatch({ type: types.SET_ERROR, error: { text: message, level: 'error' } });
+    });
 };
 
 const mapBuildsToRows = (builds: IBuildView[]) => {
+  const { context } = useGlobalContext();
+
   return builds.map(b => {
     let icon = iconByState[b.displayStatus];
     let iconClass = `state-${b.displayStatus}`;
@@ -89,7 +100,7 @@ const mapBuildsToRows = (builds: IBuildView[]) => {
         <td>
           <FolderButton
             title='Open drop folder'
-            clickHandler={() => openFolderClick(b.projectName, b.id)} />
+            clickHandler={() => openFolderClick(b.projectName, b.id, context.dispatch)} />
         </td>
       </tr>
     );
@@ -133,15 +144,16 @@ const BuildsTable = (props: { textFilter: string }) => {
     context.dispatch({ type: types.CLEAR_ERROR });
   };
 
-  const errorDisplay = context.error ? (
-    <ErrorDisplay
-      message={context.error.toString()}
+  const messagePanel = context.message ? (
+    <MessagePanel
+      message={context.message.text}
+      level={context.message.level}
       closeClick={errorCloseHandler} />)
     : undefined;
 
   return (
     <>
-      {errorDisplay}
+      {messagePanel}
       <table className='BuildsTable'>
         <thead>
           <tr>

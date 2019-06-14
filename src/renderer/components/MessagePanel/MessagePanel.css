@@ -1,0 +1,49 @@
+.message-panel{
+  font-weight: bold;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  width: 50%;
+  margin: 5pt auto 10pt;
+  padding: 5pt;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-panel button {
+  background-color: transparent;
+  border: none;
+  margin: 0pt;
+  padding: 1pt 2pt 0;
+  font-size: 1.2rem;
+}
+
+.error {
+  background-color: #FCC;
+  color: #D00;
+  border-color: #D00;
+  box-shadow: 1px 1px 8px 1px #800;
+}
+
+.error button {
+  color: #800;
+}
+
+.error button:hover {
+  background-color: #FDD;
+}
+
+.warn {
+  background-color: rgb(248, 215, 178);
+  color: rgb(230, 138, 19);
+  border-color: rgb(230, 138, 19);
+  box-shadow: 1px 1px 8px 1px rgb(189, 113, 26);
+}
+
+.warn button {
+  color: rgb(189, 113, 26);
+}
+
+.warn button:hover {
+  background-color: rgb(252, 234, 207);
+}

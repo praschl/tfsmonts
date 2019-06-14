@@ -2,12 +2,17 @@ import * as React from 'react';
 import { IBuildView } from '../logic/build';
 import { IProjectView } from '../logic/project';
 
+export interface IMessage {
+  text: string;
+  level: 'warn' | 'error';
+}
+
 export interface IGlobalContext {
   dispatch: React.Dispatch<IAction>;
   projects: IProjectView[];
   builds: IBuildView[];
   lastBuildsFetchDate?: Date;
-  error?: string;
+  message?: IMessage;
 }
 
 export interface IAction {
@@ -16,5 +21,5 @@ export interface IAction {
   projects?: IProjectView[];
   builds?: IBuildView[];
   requestDate?: Date;
-  error?: string;
+  error?: IMessage;
 }

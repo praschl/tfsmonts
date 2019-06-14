@@ -54,11 +54,11 @@ const fetchBuildsSuccess = (context: IGlobalContext, action: IAction): IGlobalCo
 };
 
 const setError = (context: IGlobalContext, action: IAction): IGlobalContext => {
-    return { ...context, error: action.error };
+    return { ...context, message: action.error };
 };
 
 const clearError = (context: IGlobalContext): IGlobalContext => {
-    return { ...context, error: undefined };
+    return { ...context, message: undefined };
 };
 
 export { fetchProjectsSuccess, fetchBuildsSuccess, setError, clearError };

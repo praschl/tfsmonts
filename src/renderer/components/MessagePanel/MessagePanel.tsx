@@ -4,15 +4,23 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 
-import './ErrorDisplay.css';
+import './MessagePanel.css';
 
-function ErrorDisplay(props: { message: string; closeClick(): void }) {
+type MessagePanelProps = {
+  message: string;
+  level: 'warn' | 'error';
+  closeClick(): void;
+};
+
+function MessagePanel(props: MessagePanelProps) {
+  const styles = ['message-panel', props.level].join(' ');
+
   return (
-    <div className='error-message'>
+    <div className={styles}>
       <span>{props.message}</span>
       <button onClick={props.closeClick}><FontAwesomeIcon icon={faTimes} /></button>
     </div>
   );
 }
 
-export default ErrorDisplay;
+export default MessagePanel;
