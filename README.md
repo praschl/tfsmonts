@@ -15,6 +15,9 @@ of all Team Projects in once place, since the web ui of TFS will only show one T
 - Display releases related to each build
 - more to come...
 
+## What does it look like?
+![Overview](docs/overview.png)
+
 # Technical stuff
 This is a rewrite of https://github.com/praschl/TeamBuildMonitor which used the WCF api of TFS. The new REST api is much more
 flexible, easier to use and has much more functionality, which will let me create more exciting features.
